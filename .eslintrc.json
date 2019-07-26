@@ -1,0 +1,32 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb-base",
+        "prettier",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "prettier",
+        "import"
+    ],
+    "rules": {
+        // show prettier errors in eslint
+        "prettier/prettier": "error",
+        // maximum line length error
+        "max-len": ["error", 80],
+        // have prettier require single quotes
+        "prettier/prettier": ["error", { "singleQuote": true }]
+    }
+}
