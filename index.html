@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   style="display: none;">
+  <symbol viewBox="0 0 9.1684024 9.4334691" id="larrow">
+    <path
+       id="path4520"
+       d="M 8.4159123,0.74798674 0.74299564,4.7167364 8.4159123,8.6854864"
+       style="fill:none;stroke:#aeaebd;stroke-width:1.48616457;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </symbol>
+</svg>
 
 <head>
   <meta charset="UTF-8">
@@ -22,8 +32,8 @@
 
 <body>
 
-
 <header>
+
 
   <section class="cover flex">
 
@@ -577,7 +587,7 @@
 
   <section id="about" class="section section--a" aria-labelledby="about-header">
 
-    <div class="img-block"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -629,7 +639,7 @@
 
   <section id="poultry-group1" class="section section--f clear" aria-labelledby="poultry-group1-header">
 
-    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -645,7 +655,7 @@
 
   <section id="poultry-group2" class="section section--g clear" aria-labelledby="poultry-group2-header">
 
-    <div class="img-block"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -660,7 +670,7 @@
 
   <section id="poultry-group3" class="section section--c clear" aria-labelledby="poultry-group3-header">
 
-    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -675,18 +685,20 @@
 
   <section id="poultry-group4" class="section section--i clear" aria-labelledby="poultry-group4-header">
 
-    <div class="img-block"><img class="img-block__img"
-      srcset="img/poultry_for_sale/olive_egger_072219/olive_egger1_960w.webp 960w,
-        img/poultry_for_sale/olive_egger_072219/olive_egger1_960w.jpg 960w,
-        img/poultry_for_sale/olive_egger_072219/olive_egger1_683w.webp 683w,
-        img/poultry_for_sale/olive_egger_072219/olive_egger1_683w.jpg 683w,
-        img/poultry_for_sale/olive_egger_072219/olive_egger1_320w.webp 320w,
-        img/poultry_for_sale/olive_egger_072219/olive_egger1_320w.jpg 320w"
+    <div class="img-block gallery" data-birdid="oliveEgger072219">
+     <img class="img-block__img"
+      srcset="img/poultry_for_sale/oliveEgger072219/1_960w.webp 960w,
+        img/poultry_for_sale/oliveEgger072219/1_960w.jpg 960w,
+        img/poultry_for_sale/oliveEgger072219/1_683w.webp 683w,
+        img/poultry_for_sale/oliveEgger072219/1_683w.jpg 683w,
+        img/poultry_for_sale/oliveEgger072219/1_320w.webp 320w,
+        img/poultry_for_sale/oliveEgger072219/1_320w.jpg 320w"
       sizes="(min-width: 1920px) 960px,
         50vw"
-      src="img/poultry_for_sale/olive_egger_072219/olive_egger1_960w.webp"
+      src="img/poultry_for_sale/oliveEgger072219/1_960w.webp"
       alt=""
-      /></div>
+      />
+    </div>
 
     <div class="padded-block">
 
@@ -701,7 +713,7 @@
 
   <section id="poultry-group5" class="section section--j clear" aria-labelledby="poultry-group5-header">
 
-    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -716,7 +728,7 @@
 
   <section id="poultry-group6" class="section section--k clear" aria-labelledby="poultry-group6-header">
 
-    <div class="img-block img-block"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block img-block"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -731,7 +743,7 @@
 
   <section id="poultry-group7" class="section section--l clear" aria-labelledby="poultry-group7-header">
 
-    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover2.jpg" alt=""></div>
+    <div class="img-block img-block--right"><img class="img-block__img" src="img/cover-768.jpg" alt=""></div>
 
     <div class="padded-block">
 
@@ -839,5 +851,8 @@
 
 </body>
 
+<script src="node_modules/animejs/lib/anime.js"></script>
+<script src="index.js"></script>
+<script src="assets/gallery/gallery.js"></script>
 
 </html>

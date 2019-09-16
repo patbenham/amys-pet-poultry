@@ -151,6 +151,51 @@ main {
   width: 1px;
 }
 
+.popup-modal {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  padding: 0;
+  position: fixed;
+  background-color: #000000ee;
+}
+.popup-modal__frame {
+  height: 92vh;
+}
+.popup-modal__photo {
+  margin: 0 auto;
+  display: block;
+}
+.popup-modal__navbar {
+  position: absolute;
+  width: 100vw;
+  height: 9.2vh;
+  bottom: 0;
+  left: 0;
+}
+.popup-modal__arrows {
+  display: block;
+  margin: 0 auto;
+  width: 16em;
+  height: 8em;
+  padding: 0;
+}
+.popup-modal__left-arrow,
+.popup-modal__right-arrow {
+  display: inline-block;
+  width: 8em;
+  height: 8em;
+  margin: 0;
+  padding: 0;
+}
+.popup-modal__left-arrow:before {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 100px solid red;
+}
+
 .cover {
   height: 100vh;
   max-width: 1920px;
