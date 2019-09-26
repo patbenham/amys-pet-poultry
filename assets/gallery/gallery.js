@@ -158,6 +158,8 @@ function createGalleries(popupModal) {
         currentGallery[1].load();
         currentGallery[currentGallery.length - 1].load();
 
+        document.body.classList.add('modal-open');
+
 
         // imagePreDecode.prepend(currentGallery[0].img);
         // imagePreDecode.prepend(currentGallery[1].img);
@@ -195,6 +197,7 @@ function createGalleries(popupModal) {
 
   modalCloseBtn.onclick = function closeGallery() {
     popupModal.classList.add('popup-modal--hidden');
+    document.body.classList.remove('modal-open');
     window.setTimeout(() => popupModal.classList.toggle('visually-hidden'),
       300);
     if(document.fullscreenElement) document.exitFullscreen();

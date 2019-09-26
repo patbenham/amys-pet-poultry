@@ -151,6 +151,10 @@ main {
   width: 1px;
 }
 
+.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
+}
 .popup-modal {
   height: 100vh;
   width: 100vw;
