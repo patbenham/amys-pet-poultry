@@ -11,6 +11,25 @@
        style="fill:none;stroke:#aeaebd;stroke-width:1.48616457;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </symbol>
 </svg>
+<svg
+   height="0"
+   viewbox="0 0 100 100"
+   >
+    <filter id="flooder">
+        <feFlood flood-color="#EB0066" flood-opacity=".3"></feFlood>
+    </filter>
+
+</svg>
+
+<svg width="900" height="450" viewBox="0 0 900 450">
+	<filter id="myFilter">
+		<feMorphology operator="dilate" radius="8" 
+		in="SourceGraphic" result="THICKNESS" />
+		<feComposite operator="out" in="THICKNESS" in2="SourceGraphic" ></feComposite>
+	</filter>
+	
+</svg>
+
 
 <head>
   <meta charset="UTF-8">
@@ -686,6 +705,10 @@
   <section id="poultry-group4" class="section section--i clear" aria-labelledby="poultry-group4-header">
 
     <div class="img-block gallery" data-birdid="oliveEgger072219">
+    <!--   <div class="img-block__overlay flex"> -->
+    <!--     <img src="img/magnify2.svg"/> -->
+    <!--   </div> -->
+
      <img class="img-block__img"
       srcset="img/poultry_for_sale/oliveEgger072219/1_960w.webp 960w,
         img/poultry_for_sale/oliveEgger072219/1_960w.jpg 960w,
