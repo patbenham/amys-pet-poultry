@@ -1,6 +1,7 @@
 // TODO: get this site hosted & test responsiveness on mobile phone
 const Galleries = {};
 let currentGallery;
+let currentGalleryNode;
 
 function createPopupModal() {
   let popupModal = document.createElement('div');
@@ -82,8 +83,6 @@ function createGalleries(popupModal) {
 
   let photoArr = [];
   let currentPhotoIndex = 0;
-  let scrollPos;
-  window.addEventListener('scroll', getScrollPos);
 
 
   function GalleryPhoto() {
@@ -136,7 +135,6 @@ function createGalleries(popupModal) {
 
 
       gallery.onclick = function openGallery() {
-        window.removeEventListener('scroll', getScrollPos);
         // hard-coded # of pictures to fetch for now
         // TODO: add server-side code to dynamically fetch all photos in
         // respective folder & create a srcset for each
@@ -150,6 +148,7 @@ function createGalleries(popupModal) {
         }
 
         currentPhotoIndex = 0;
+        currentGalleryNode = gallery;
 
         removeChildNodes(modalPhoto);
         removeChildNodes(modalPhotoRight);
@@ -162,7 +161,6 @@ function createGalleries(popupModal) {
         currentGallery[1].load();
         currentGallery[currentGallery.length - 1].load();
 
-        console.log(scrollPos);
         document.body.classList.add('modal-open');
 
 
@@ -201,14 +199,12 @@ function createGalleries(popupModal) {
   }
 
   modalCloseBtn.onclick = function closeGallery() {
-    window.addEventListener('scroll', getScrollPos);
     popupModal.classList.add('popup-modal--hidden');
     document.body.classList.remove('modal-open');
     window.setTimeout(() => popupModal.classList.toggle('visually-hidden'),
       300);
     if(document.fullscreenElement) document.exitFullscreen();
-    console.log(`scrolling back to: ${scrollPos}`);
-    window.scrollTo(0, scrollPos);
+    currentGalleryNode.scrollIntoView();
   }
 
   modalExpandBtn.onclick = function toggleFullScreen() {
@@ -476,10 +472,6 @@ function createGalleries(popupModal) {
     gallery.prepend(overlay);
   }
 
-  function getScrollPos() {
-    scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    console.log(scrollPos);
-  }
 }
 
 

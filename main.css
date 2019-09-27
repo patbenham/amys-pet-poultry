@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html {
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; */
   font-family: 'Roboto Slab', sans-serif;
@@ -154,7 +158,7 @@ main {
 .modal-open {
   height: 100vh;
   width: 100vw;
-  overflow-y: hidden;
+  overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
