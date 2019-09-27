@@ -1,4 +1,17 @@
 // TODO: get this site hosted & test responsiveness on mobile phone
+// TODO: swipe & zoom animations are really slow on mobile -- try using
+// will-change & transform3d to improve responsiveness
+// TODO: setup webpack & webpack-dev-server so I can quickly see changes on
+// android phone via local web server for testing
+// TODO: work on making site more flexible -- e.g. changing orientation on phone
+// messes up the gallery UI
+// TODO: mousedown/mouseup events dont work on mobile -- fix this so panning
+// images work (touch events??)
+// TODO: setup linting, get into habit of using tab completion, start using
+// vim-dasht, vim surround, emmet-vim, imagemin & responsive loader webpack plugins,
+// prettier, stylelint, autoprefixer
+// TODO: learn the basics of SASS & start using it (setup webpack/npm to compile
+// it)
 const Galleries = {};
 let currentGallery;
 let currentGalleryNode;
