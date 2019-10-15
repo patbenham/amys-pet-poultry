@@ -1,34 +1,43 @@
+import minBtn from './img/minify.png';
+import magBtn from './img/magnify.png';
+import shareBtn from './img/share.png';
+import expandBtn from './img/expand.png';
+import xBtn from './img/x.png';
+import arrowBtn from './img/arrow.png';
+import magBtn2 from './img/magnify2.svg';
 // TODO: get this site hosted & test responsiveness on mobile phone
 // TODO: swipe & zoom animations are really slow on mobile -- try using
 // will-change & transform3d to improve responsiveness
-// TODO: setup webpack & webpack-dev-server so I can quickly see changes on
-// android phone via local web server for testing
 // TODO: work on making site more flexible -- e.g. changing orientation on phone
 // messes up the gallery UI
 // TODO: mousedown/mouseup events dont work on mobile -- fix this so panning
 // images work (touch events??)
 // TODO: setup linting, get into habit of using tab completion, start using
-// vim-dasht, vim surround, emmet-vim, imagemin & responsive loader webpack plugins,
-// prettier, stylelint, autoprefixer
+// vim-dasht, vim surround, emmet-vim, imagemin & responsive loader webpack
+// plugins, prettier, stylelint, autoprefixer
 // TODO: learn the basics of SASS & start using it (setup webpack/npm to compile
 // it)
-const Galleries = {};
+// TODO: setup webpack & webpack-dev-server so I can quickly see changes on
+// android phone via local web server for testing
+const photoGalleries = {};
 let currentGallery;
 let currentGalleryNode;
 
 function createPopupModal() {
-  let popupModal = document.createElement('div');
-  popupModal.classList.add("popup-modal");
-  popupModal.classList.add("visually-hidden");
-  popupModal.innerHTML = `<div class="popup-modal__frame flex">
+  const popupModal = document.createElement('div');
+  popupModal.classList.add('popup-modal');
+  popupModal.classList.add('visually-hidden');
+  popupModal.innerHTML = `<div class='popup-modal__frame flex'>
 
     <div class="image-predecode"></div>
 
       <div class="popup-modal__photo--left popup-modal__photo--transition flex">
         </div>
-      <div class="popup-modal__photo--center popup-modal__photo--transition flex">
+      <div class="popup-modal__photo--center
+        popup-modal__photo--transition flex">
         </div>
-      <div class="popup-modal__photo--right popup-modal__photo--transition flex">
+      <div class="popup-modal__photo--right 
+        popup-modal__photo--transition flex">
         </div>
 
     </div>
@@ -39,23 +48,23 @@ function createPopupModal() {
       </div>
 
       <div class="popup-modal__minify-btn popup-modal__btn--dim">
-        <img src="img/minify.png">
+        <img src=${minBtn}>
       </div>
 
       <div class="popup-modal__magnify-btn popup-modal__btn--dim">
-        <img src="img/magnify.png">
+        <img src="${magBtn}">
       </div>
 
       <div class="popup-modal__share-btn popup-modal__btn">
-        <img src="img/share.png">
+        <img src="${shareBtn}">
       </div>
 
       <div class="popup-modal__expand-btn popup-modal__btn">
-        <img src="img/expand.png">
+        <img src="${expandBtn}">
       </div>
 
       <div class="popup-modal__close-btn popup-modal__btn">
-        <img src="img/x.png">
+        <img src="${xBtn}">
       </div>
 
 
@@ -63,46 +72,42 @@ function createPopupModal() {
     
 
     <div class="popup-modal__left-arrow">
-      <img src="img/arrow.png">
+      <img src="${arrowBtn}">
     </div>
 
     <div class="popup-modal__right-arrow">
-      <img src="img/arrow.png">
+      <img src="${arrowBtn}">
     </div>`;
-
-
 
   document.body.prepend(popupModal);
   return popupModal;
 }
 
-
 function createGalleries(popupModal) {
   let modalPhoto = popupModal.querySelector('.popup-modal__photo--center');
   let modalPhotoLeft = popupModal.querySelector('.popup-modal__photo--left');
   let modalPhotoRight = popupModal.querySelector('.popup-modal__photo--right');
-  let modalCloseBtn = popupModal.querySelector('.popup-modal__close-btn');
-  let modalLeftArrow = popupModal.querySelector('.popup-modal__left-arrow');
-  let modalRightArrow = popupModal.querySelector('.popup-modal__right-arrow');
-  let modalNavBar = popupModal.querySelector('.popup-modal__navbar');
-  let modalExpandBtn = popupModal.querySelector('.popup-modal__expand-btn');
-  let modalMagnifyBtn = popupModal.querySelector('.popup-modal__magnify-btn');
-  let modalMinifyBtn = popupModal.querySelector('.popup-modal__minify-btn');
-  let modalShareBtn = popupModal.querySelector('.popup-modal__share-btn');
-  let popupModalFrame = popupModal.querySelector('.popup-modal__frame');
-  let popupModalCounter = popupModal.querySelector('.popup-modal__counter');
+  const modalCloseBtn = popupModal.querySelector('.popup-modal__close-btn');
+  const modalLeftArrow = popupModal.querySelector('.popup-modal__left-arrow');
+  const modalRightArrow = popupModal.querySelector('.popup-modal__right-arrow');
+  const modalNavBar = popupModal.querySelector('.popup-modal__navbar');
+  const modalExpandBtn = popupModal.querySelector('.popup-modal__expand-btn');
+  const modalMagnifyBtn = popupModal.querySelector('.popup-modal__magnify-btn');
+  const modalMinifyBtn = popupModal.querySelector('.popup-modal__minify-btn');
+  // const modalShareBtn = popupModal.querySelector('.popup-modal__share-btn');
+  const popupModalFrame = popupModal.querySelector('.popup-modal__frame');
+  const popupModalCounter = popupModal.querySelector('.popup-modal__counter');
 
-  let imagePreDecode = popupModal.querySelector('.image-predecode');
+  // const imagePreDecode = popupModal.querySelector('.image-predecode');
 
-  let photoArr = [];
+  // const photoArr = [];
   let currentPhotoIndex = 0;
-
 
   function GalleryPhoto() {
     this.loaded = false;
     this.img = new Image();
     this.src = undefined;
-    this.img.classList.add("popup-modal__photo");
+    this.img.classList.add('popup-modal__photo');
     this.img.style.transition = 'transform 0.2s ease-out';
     this.zoomLevel = 1;
     this.origWidth = undefined;
@@ -110,8 +115,8 @@ function createGalleries(popupModal) {
     this.translateX = 0;
     this.translateY = 0;
 
-    let galleryPhotoObj = this;
-    this.img.onload = function () {
+    const galleryPhotoObj = this;
+    this.img.onload = function imgOnload() {
       galleryPhotoObj.loaded = true;
       galleryPhotoObj.origWidth = galleryPhotoObj.img.width;
       galleryPhotoObj.origHeight = galleryPhotoObj.img.height;
@@ -119,24 +124,26 @@ function createGalleries(popupModal) {
     }
   }
 
-  GalleryPhoto.prototype.load = function () {
-    if(this.img.src !== this.src) this.img.src = this.src;
+  GalleryPhoto.prototype.load = function load() {
+    if (this.img.src !== this.src) this.img.src = this.src;
     this.img.decode().then(() => console.log('image decoded'));
   };
 
 
-  let galleries = document.querySelectorAll('.gallery');
+  const galleries = document.querySelectorAll('.gallery');
 
-  galleries.forEach(gallery => {
-  let birdId = gallery.dataset.birdid;
-    if(birdId) {
+  galleries.forEach((gallery) => {
+    let birdId = gallery.dataset.birdid;
+    if (birdId) {
       addGalleryOverlay(gallery);
 
       // let birdImg = document.createElement('img');
-      // birdImg.src = "img/poultry_for_sale/olive_egger_072219/olive_egger1_960w.webp";
+      // birdImg.src =
+      // "img/poultry_for_sale/olive_egger_072219/olive_egger1_960w.webp";
       // birdImg.classList.add("img-block__img");
 
-      // birdImg.srcset=`img/poultry_for_sale/${birdId}/olive_egger1_960w.webp 960w,
+      // birdImg.srcset =
+      //    `img/poultry_for_sale/${birdId}/olive_egger1_960w.webp 960w,
       //     img/poultry_for_sale/${birdId}/olive_egger1_960w.jpg 960w,
       //     img/poultry_for_sale/${birdId}/olive_egger1_683w.webp 683w,
       //     img/poultry_for_sale/${birdId}/olive_egger1_683w.jpg 683w,
@@ -146,18 +153,16 @@ function createGalleries(popupModal) {
       //     50vw`;
       // imgBlock.appendChild(birdImg);
 
-
       gallery.onclick = function openGallery() {
         // hard-coded # of pictures to fetch for now
         // TODO: add server-side code to dynamically fetch all photos in
         // respective folder & create a srcset for each
-        if(!(birdId in galleries)) {
-          galleries[birdId] = [];
-          currentGallery = galleries[birdId];
+        if (!(birdId in photoGalleries)) {
+          photoGalleries[birdId] = [];
+          currentGallery = photoGalleries[birdId];
           addGalleryPhotos(birdId, currentGallery);
-        }
-        else {
-          currentGallery = galleries[birdId];
+        } else {
+          currentGallery = photoGalleries[birdId];
         }
 
         currentPhotoIndex = 0;
@@ -166,7 +171,7 @@ function createGalleries(popupModal) {
         removeChildNodes(modalPhoto);
         removeChildNodes(modalPhotoRight);
         removeChildNodes(modalPhotoLeft);
-        
+
         modalPhoto.prepend(currentGallery[0].img);
         modalPhotoRight.prepend(currentGallery[1].img);
         modalPhotoLeft.prepend(currentGallery[currentGallery.length - 1].img);
@@ -176,10 +181,10 @@ function createGalleries(popupModal) {
 
         document.body.classList.add('modal-open');
 
-
         // imagePreDecode.prepend(currentGallery[0].img);
         // imagePreDecode.prepend(currentGallery[1].img);
-        // imagePreDecode.prepend(currentGallery[currentGallery.length - 1].img);
+        // imagePreDecode.prepend(
+        //  currentGallery[currentGallery.length - 1].img);
 
         // willChange(modalPhoto.firstChild);
         // willChange(modalPhotoRight.firstChild);
@@ -193,44 +198,55 @@ function createGalleries(popupModal) {
         popupModal.classList.toggle('visually-hidden');
         popupModal.classList.remove('popup-modal--hidden');
       };
-
     }
   });
 
   function removeChildNodes(node) {
-    while(node.firstChild) {
+    while (node.firstChild) {
       node.removeChild(node.firstChild);
     }
   }
 
   function addGalleryPhotos(birdId, gallery) {
-    for(let i = 1; i <= 4; i++) {
-      let src = `img/poultry_for_sale/${birdId}/${i}_960w.jpg`;
-      gallery.push(new GalleryPhoto());
-      gallery[i - 1].src = src;
+    for (let i = 1; i <= 4; i++) {
+      // let src = `img/poultry_for_sale/${birdId}/${i}_960w.jpg`;
+      let src;
+      // TODO: need to add promise handling logic to image loading functions
+      // inside onclick
+      import(
+      /* webpackMode: "lazy-once" */
+      /* webpackPrefetch: true */
+      `img/poultry_for_sale/${birdId}/${i}_960w.jpg`)
+        .then((url) => {
+          src = url;
+          gallery.push(new GalleryPhoto());
+          gallery[i - 1].src = src;
+        })
     }
   }
 
   modalCloseBtn.onclick = function closeGallery() {
     popupModal.classList.add('popup-modal--hidden');
     document.body.classList.remove('modal-open');
-    window.setTimeout(() => popupModal.classList.toggle('visually-hidden'),
-      300);
-    if(document.fullscreenElement) document.exitFullscreen();
+    window.setTimeout(
+      () => popupModal.classList.toggle('visually-hidden'),
+      300
+    );
+    if (document.fullscreenElement) document.exitFullscreen();
     currentGalleryNode.scrollIntoView();
   }
 
   modalExpandBtn.onclick = function toggleFullScreen() {
-    if(!document.fullscreenElement) popupModal.requestFullscreen();
-    else if(document.exitFullscreen) document.exitFullscreen();
+    if (!document.fullscreenElement) popupModal.requestFullscreen();
+    else if (document.exitFullscreen) document.exitFullscreen();
   }
 
   modalLeftArrow.onclick = prevPhoto;
   modalRightArrow.onclick = nextPhoto;
 
   let timeoutId = null;
-  popupModal.addEventListener('mousemove', function showOverlay() {
-    if(timeoutId) window.clearTimeout(timeoutId);
+  popupModal.addEventListener('mousemove', () => {
+    if (timeoutId) window.clearTimeout(timeoutId);
     modalLeftArrow.classList.add('popup-modal__left-arrow--fadein');
     modalRightArrow.classList.add('popup-modal__right-arrow--fadein');
     modalNavBar.classList.add('popup-modal__navbar--fadein');
@@ -244,33 +260,32 @@ function createGalleries(popupModal) {
   }
 
   function zoomPhoto(change) {
-    return function() {
+    return function zoom() {
       let currentPhoto = currentGallery[currentPhotoIndex];
-      if(!currentPhoto.loaded) return;
+      if (!currentPhoto.loaded) return;
 
       let newZoomLevel = currentPhoto.zoomLevel += change;
 
-      if(newZoomLevel >= 4) {
+      if (newZoomLevel >= 4) {
         newZoomLevel = currentPhoto.zoomLevel = 4;
         modalMagnifyBtn.classList.remove('popup-modal__btn');
         modalMagnifyBtn.classList.add('popup-modal__btn--dim');
-      }
-      else {
+      } else {
         modalMagnifyBtn.classList.add('popup-modal__btn');
         modalMagnifyBtn.classList.remove('popup-modal__btn--dim');
       }
 
-      if(newZoomLevel <= 1) {
+      if (newZoomLevel <= 1) {
         newZoomLevel = currentPhoto.zoomLevel = 1;
         modalMinifyBtn.classList.remove('popup-modal__btn');
         modalMinifyBtn.classList.add('popup-modal__btn--dim');
-      }
-      else {
+      } else {
         modalMinifyBtn.classList.add('popup-modal__btn');
         modalMinifyBtn.classList.remove('popup-modal__btn--dim');
       }
 
-      // currentPhoto.img.style.transform = `scale(${newZoomLevel}) translate(${currentPhoto.translateX}px, ${currentPhoto.translateY}px)`;
+      // currentPhoto.img.style.transform = `scale(${newZoomLevel})
+      // translate(${currentPhoto.translateX}px, ${currentPhoto.translateY}px)`;
       snapImgToFrame(currentPhoto);
     }
   }
@@ -280,9 +295,9 @@ function createGalleries(popupModal) {
 
   function nextPhoto() {
     let leftIndex = currentPhotoIndex - 1;
-    if(leftIndex < 0) leftIndex = currentGallery.length - 1;
+    if (leftIndex < 0) leftIndex = currentGallery.length - 1;
 
-    if(++currentPhotoIndex >= currentGallery.length) currentPhotoIndex = 0;
+    if (++currentPhotoIndex >= currentGallery.length) currentPhotoIndex = 0;
     updateModalCounter();
 
     let leftPhotoObj = currentGallery[leftIndex];
@@ -303,7 +318,7 @@ function createGalleries(popupModal) {
     modalPhotoLeft = modalPhoto;
     modalPhoto = right;
 
-    if(currentPhotoIndex + 1 >= currentGallery.length) {
+    if (currentPhotoIndex + 1 >= currentGallery.length) {
       let firstEl = currentGallery[0];
       modalPhotoRight.firstChild.replaceWith(firstEl.img)
       firstEl.load();
@@ -314,13 +329,13 @@ function createGalleries(popupModal) {
       nextEl.load();
     }
 
-    zoomPhoto(0)();  // reset magnify & minify buttons
+    zoomPhoto(0)(); // reset magnify & minify buttons
   }
   function prevPhoto() {
     let rightIndex = currentPhotoIndex + 1;
-    if(rightIndex > currentGallery.length - 1) rightIndex = 0;
+    if (rightIndex > currentGallery.length - 1) rightIndex = 0;
 
-    if(--currentPhotoIndex < 0) currentPhotoIndex = currentGallery.length - 1;
+    if (--currentPhotoIndex < 0) currentPhotoIndex = currentGallery.length - 1;
     updateModalCounter();
 
     let rightPhotoObj = currentGallery[rightIndex];
@@ -341,7 +356,7 @@ function createGalleries(popupModal) {
     modalPhotoRight = modalPhoto;
     modalPhoto = left;
 
-    if(currentPhotoIndex - 1 < 0) {
+    if (currentPhotoIndex - 1 < 0) {
       let lastEl = currentGallery[currentGallery.length - 1];
       modalPhotoLeft.firstChild.replaceWith(lastEl.img)
       lastEl.load();
@@ -352,7 +367,7 @@ function createGalleries(popupModal) {
       prevEl.load();
     }
 
-    zoomPhoto(0)();  // reset magnify & minify buttons
+    zoomPhoto(0)(); // reset magnify & minify buttons
   }
 
   popupModal.addEventListener('mousedown', startPan);
@@ -375,7 +390,7 @@ function createGalleries(popupModal) {
     imgHeight = currentImg.origHeight * currentImg.zoomLevel;
     panningPhoto = true;
 
-    if(imgWidth <= currentFrameWidth && imgHeight <= currentFrameHeight) {
+    if (imgWidth <= currentFrameWidth && imgHeight <= currentFrameHeight) {
       swiping = true;
     }
 
@@ -383,7 +398,7 @@ function createGalleries(popupModal) {
     e.preventDefault();
   }
   function pan(e) {
-    if(panningPhoto) {
+    if (panningPhoto) {
       let zoomLevel = currentImg.zoomLevel;
       let moveX = e.clientX - startingPanPoint[0];
       let moveY = e.clientY - startingPanPoint[1];
@@ -391,9 +406,9 @@ function createGalleries(popupModal) {
       let newTransX = currentImg.translateX;
       let newTransY = currentImg.translateY;
 
-      if(imgWidth > currentFrameWidth) newTransX += moveX;
-      if(imgHeight > currentFrameHeight) newTransY += moveY;
-      if(swiping) {
+      if (imgWidth > currentFrameWidth) newTransX += moveX;
+      if (imgHeight > currentFrameHeight) newTransY += moveY;
+      if (swiping) {
         newTransX += moveX;
       }
 
@@ -403,59 +418,56 @@ function createGalleries(popupModal) {
   function cancelPan(e) {
     let moveX;
     let moveY;
-    if(panningPhoto) {
+    if (panningPhoto) {
       moveX = e.clientX - startingPanPoint[0];
       moveY = e.clientY - startingPanPoint[1];
     }
 
-    if(panningPhoto && !swiping) {
+    if (panningPhoto && !swiping) {
       panningPhoto = false;
       currentImg.translateX += moveX;
       currentImg.translateY += moveY;
       snapImgToFrame(currentImg);
-    }
-    else if(swiping) {
+    } else if (swiping) {
       panningPhoto = swiping = false;
-      if(moveX > 50) prevPhoto();
-      else if(moveX < -50) nextPhoto();
+      if (moveX > 50) prevPhoto();
+      else if (moveX < -50) nextPhoto();
       else snapImgToFrame(currentImg);
     }
   }
 
   function snapImgToFrame(img) {
-    let imgWidth = img.origWidth * img.zoomLevel;
-    let imgHeight = img.origHeight * img.zoomLevel;
-    let frameWidth = popupModalFrame.offsetWidth;
-    let frameHeight = popupModalFrame.offsetHeight;
+    const imgWidth = img.origWidth * img.zoomLevel;
+    const imgHeight = img.origHeight * img.zoomLevel;
+    const frameWidth = popupModalFrame.offsetWidth;
+    const frameHeight = popupModalFrame.offsetHeight;
 
-    if(imgWidth > frameWidth) {
-      let imgRightEdgeX = (imgWidth / 2) + (frameWidth / 2) + img.translateX;
-      let imgLeftEdgeX = (frameWidth / 2) - (imgWidth / 2) + img.translateX;
+    if (imgWidth > frameWidth) {
+      const imgRightEdgeX = (imgWidth / 2) + (frameWidth / 2) + img.translateX;
+      const imgLeftEdgeX = (frameWidth / 2) - (imgWidth / 2) + img.translateX;
 
-      if(imgRightEdgeX < frameWidth) {
+      if (imgRightEdgeX < frameWidth) {
        img.translateX += frameWidth - imgRightEdgeX; 
-      }
-      else if(imgLeftEdgeX > 0) {
+      } else if(imgLeftEdgeX > 0) {
         img.translateX -= imgLeftEdgeX;
       }
     }
 
-    if(imgHeight > frameHeight) {
-      let imgBottomEdgeY = (imgHeight / 2) + (frameHeight / 2) + img.translateY;
-      let imgTopEdgeY = (frameHeight / 2) - (imgHeight / 2) + img.translateY;
+    if (imgHeight > frameHeight) {
+      const imgBottomEdgeY = (imgHeight / 2) + (frameHeight / 2) + img.translateY;
+      const imgTopEdgeY = (frameHeight / 2) - (imgHeight / 2) + img.translateY;
 
-      if(imgBottomEdgeY < frameHeight) {
-       img.translateY += frameHeight - imgBottomEdgeY; 
-      }
-      else if(imgTopEdgeY > 0) {
+      if (imgBottomEdgeY < frameHeight) {
+        img.translateY += frameHeight - imgBottomEdgeY;
+      } else if (imgTopEdgeY > 0) {
         img.translateY -= imgTopEdgeY;
       }
     }
 
-    if(imgHeight <= frameHeight) {
+    if (imgHeight <= frameHeight) {
       img.translateY = 0;
     }
-    if(imgWidth <= frameWidth) {
+    if (imgWidth <= frameWidth) {
       img.translateX = 0;
     }
 
@@ -467,26 +479,23 @@ function createGalleries(popupModal) {
     popupModalCounter.firstChild.textContent = `${currentPhotoIndex + 1} / ${currentGallery.length}`;
   }
 
-  function willChange(el) {
-    el.style.willChange = 'transform, opacity';
-  }
-  function removeWillChange() {
-    this.style.willChange = 'auto';
-  }
+  // function willChange(el) {
+  //   el.style.willChange = 'transform, opacity';
+  // }
+  // function removeWillChange() {
+  //   this.style.willChange = 'auto';
+  // }
 
   function addGalleryOverlay(gallery) {
-    console.log('adding overlay');
-    let overlay = document.createElement('div');
+    const overlay = document.createElement('div');
     overlay.classList.add('img-block__overlay');
     overlay.classList.add('flex');
-    let img = new Image();
-    img.src = 'assets/gallery/magnify2.svg';
+    const img = new Image();
+    img.src = `${magBtn2}`;
     overlay.prepend(img);
     gallery.prepend(overlay);
   }
-
 }
-
 
 
 createGalleries(createPopupModal());

@@ -5,28 +5,26 @@
     },
     "extends": [
         "airbnb-base",
-        "prettier",
+        "plugin:compat/recommended",
         "plugin:import/errors",
-        "plugin:import/warnings"
+        "plugin:import/warnings",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "plugins": [
-        "prettier",
         "import"
     ],
     "rules": {
-        // show prettier errors in eslint
         "prettier/prettier": "error",
-        // maximum line length error
         "max-len": ["error", 80],
-        // have prettier require single quotes
-        "prettier/prettier": ["error", { "singleQuote": true }]
+        "prettier/prettier": ["error", { "singleQuote": true }],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
     }
 }

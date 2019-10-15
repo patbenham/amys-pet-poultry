@@ -1,3 +1,5 @@
+$overlay-color: #000000ee;
+
 /* ================================= */
 /* =========== ANIMATION =========== */
 /* ================================= */
@@ -170,7 +172,7 @@ main {
   overflow: hidden;
   padding: 0;
   position: fixed;
-  background-color: #000000ee;
+  background-color: $overlay-color;
   opacity: 1;
   transition: opacity 0.2s ease-in;
 }
@@ -370,19 +372,19 @@ only screen and (min-resolution: 2dppx) and (min-width: 385px) and (max-width: 6
     background-image: url('img/cover-1366.jpg');
   }
 }
-@media (min-width: 1367px),
-only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 684px)
-only screen and (min--moz-device-pixel-ratio: 2) and (min-width: 684px)
-only screen and (-moz-min-device-pixel-ratio: 2) and (min-width: 684px)
-only screen and (-o-min-device-pixel-ratio: 2/1) and (min-width: 684px)
-only screen and (min-device-pixel-ratio: 2) and (min-width: 684px)
-only screen and (min-resolution: 192dpi) and (min-width: 684px)
-only screen and (min-resolution: 2dppx) and (min-width: 684px)
-{
-  .cover {
-    background-image: url('img/cover-1920.jpg');
-  }
-}
+/* @media (min-width: 1367px), */
+/* only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 684px) */
+/* only screen and (min--moz-device-pixel-ratio: 2) and (min-width: 684px) */
+/* only screen and (-moz-min-device-pixel-ratio: 2) and (min-width: 684px) */
+/* only screen and (-o-min-device-pixel-ratio: 2/1) and (min-width: 684px) */
+/* only screen and (min-device-pixel-ratio: 2) and (min-width: 684px) */
+/* only screen and (min-resolution: 192dpi) and (min-width: 684px) */
+/* only screen and (min-resolution: 2dppx) and (min-width: 684px) */
+/* { */
+/*   .cover { */
+/*     background-image: url('img/cover-1920.jpg'); */
+/*   } */
+/* } */
 .cover__links-list {
   text-align: center;
   padding: 0;

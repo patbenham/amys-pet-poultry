@@ -1,0 +1,110 @@
+{
+  "name": "amys_pet_poultry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
+    "dev": "webpack --config webpack.dev.js",
+    "build:legacy": "webpack --env.NODE_ENV=legacy --config webpack.prod.js --progress --colors",
+    "build:modern": "webpack --env.NODE_ENV=modern --config webpack.prod.js --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patbenham/amys-pet-poultry.git"
+  },
+  "author": {
+    "name": "Pat Benham",
+    "email": "pabenham@gmail.com",
+    "url": "https://patbenham.github.io"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patbenham/amys-pet-poultry/issues"
+  },
+  "homepage": "https://github.com/patbenham/amys-pet-poultry#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-compat": "^3.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "extract-loader": "^3.1.0",
+    "favicons-webpack-plugin": "^1.0.2",
+    "file-loader": "^4.2.0",
+    "html-critical-webpack-plugin": "^2.1.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^6.0.0",
+    "imagemin": "^7.0.0",
+    "jimp": "^0.8.4",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "postcss": "^7.0.18",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^1.18.2",
+    "responsive-loader": "^1.2.0",
+    "sass-loader": "^8.0.0",
+    "script-ext-html-webpack-plugin": "^2.1.4",
+    "style-loader": "^1.0.0",
+    "stylelint": "^11.1.1",
+    "stylelint-a11y": "^1.2.1",
+    "stylelint-config-prettier": "^6.0.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-prettier": "^1.1.1",
+    "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.5.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dashboard": "^3.2.0",
+    "webpack-dev-server": "^3.8.2",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "core-js": "^3.3.2"
+  },
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "last 2 versions",
+      "Firefox ESR"
+    ],
+    "legacyBrowsers": [
+      "> 1%",
+      "last 2 versions",
+      "Firefox ESR"
+    ],
+    "modernBrowsers": [
+      "last 2 Chrome versions",
+      "not Chrome < 60",
+      "last 2 Safari versions",
+      "not Safari < 10.1",
+      "last 2 iOS versions",
+      "not iOS < 10.3",
+      "last 2 Firefox versions",
+      "not Firefox < 54",
+      "last 2 Edge versions",
+      "not Edge < 15"
+    ]
+  },
+  "prettier": {},
+  "stylelint": {
+    "plugins": [],
+    "extends": [
+      "stylelint-config-recommended",
+      "stylelint-prettier/recommended",
+      "stylelint-a11y/recommended"
+    ],
+    "rules": {}
+  }
+}
