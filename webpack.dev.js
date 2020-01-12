@@ -1,7 +1,7 @@
-const LEGACY_CONFIG = 'legacy';
-const MODERN_CONFIG = 'modern';
-const pkg = require('./package.json');
-const path = require('path');
+// const LEGACY_CONFIG = 'legacy';
+// const MODERN_CONFIG = 'modern';
+// const pkg = require('./package.json');
+// const path = require('path');
 // const devMode = process.env.NODE_ENV !== 'production';
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -10,13 +10,18 @@ const common = require('./webpack.common.js');
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = [
-  merge(
-    common.legacyConfig,
+module.exports = env => {
+  const mergeTarget = env.NODE_ENV;
+  const mergeTargetConfig = mergeTarget === 'legacy'
+    ? common.legacyConfig
+    : common.modernConfig;
+
+  return merge(
+    mergeTargetConfig,
     {
       output: {
-        filename: '[name]-legacy.[hash].js',
-        chunkFilename: '[name]-legacy-CHUNK.js',
+        filename: '[name].js',
+        chunkFilename: '[name].CHUNK.js',
       },
       mode: 'development',
       devtool: 'eval-source-map',
@@ -25,41 +30,17 @@ module.exports = [
       },
       module: {
         rules: [
-          configureCssLoader(LEGACY_CONFIG),
-          configureImageLoader(LEGACY_CONFIG),
-          configureHtmlLoader(LEGACY_CONFIG),
+          configureCssLoader(mergeTarget),
+          configureImageLoader(mergeTarget),
+          configureHtmlLoader(mergeTarget),
         ],
       },
       plugins: [
         new DashboardPlugin(),
       ],
     }
-  ),
-  // merge(
-  //   common.modernConfig,
-  //   {
-  //     output: {
-  //       filename: '[name].[hash].js',
-  //       chunkFilename: '[name]-CHUNK.js',
-  //     },
-  //     mode: 'development',
-  //     devtool: 'eval-source-map',
-  //     devServer: {
-  //       contentBase: './dist',
-  //     },
-  //     module: {
-  //       rules: [
-  //         configureCssLoader(MODERN_CONFIG),
-  //         configureImageLoader(MODERN_CONFIG),
-  //         configureHtmlLoader(MODERN_CONFIG),
-  //       ],
-  //     },
-  //     plugins: [
-  //       new DashboardPlugin(),
-  //     ],
-  //   }
-  // ),
-];
+  )
+}
 
 function configureImageLoader(buildType) {
   return {
@@ -68,7 +49,7 @@ function configureImageLoader(buildType) {
       {
         loader: 'file-loader',
         options: {
-          name: '[name].[hash].[ext]'
+          name: '[name].[ext]'
         }
       },
     ]
@@ -88,7 +69,8 @@ function configureCssLoader(buildType) {
       {
         loader: 'css-loader',
         options: {
-          importLoaders: 2,
+          import: false,
+          importLoaders: 1,
           sourceMap: true
         },
       },
@@ -98,11 +80,11 @@ function configureCssLoader(buildType) {
           ident: 'postcss',
           sourceMap: true,
           plugins: [
-            require('postcss-preset-env')(),
+            require('precss'),
+            // require('postcss-preset-env')(),
           ]
         }
       },
-      'sass-loader',
     ]
   };
 }

@@ -18,7 +18,7 @@ const baseConfig = {
   name: pkg.name,
   entry: {
     main: './src/index.js',
-    gallery: './src/gallery/gallery.js',
+    gallery: './src/gallery/gallery.js'
   },
   resolve: {
     modules: [
@@ -36,8 +36,8 @@ const baseConfig = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
       //ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
     new CleanWebpackPlugin(),
@@ -87,7 +87,7 @@ function configureBabelLoader(browserList) {
         presets: [
           [
             "@babel/preset-env", {
-              debug: true,
+              // debug: true,
               // Configure how @babel/preset-env handles polyfills from core-js.
               // https://babeljs.io/docs/en/babel-preset-env
               useBuiltIns: 'usage',

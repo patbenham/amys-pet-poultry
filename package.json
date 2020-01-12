@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
-    "dev": "webpack --config webpack.dev.js",
+    "start": "webpack-dashboard -- webpack-dev-server --env.NODE_ENV=modern --config webpack.dev.js",
+    "dev": "webpack --env.NODE_ENV=modern --config webpack.dev.js",
     "build:legacy": "webpack --env.NODE_ENV=legacy --config webpack.prod.js --progress --colors",
     "build:modern": "webpack --env.NODE_ENV=modern --config webpack.prod.js --progress --colors"
   },
@@ -49,13 +49,12 @@
     "imagemin": "^7.0.0",
     "jimp": "^0.8.4",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
     "postcss": "^7.0.18",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
+    "precss": "^4.0.0",
     "prettier": "^1.18.2",
     "responsive-loader": "^1.2.0",
-    "sass-loader": "^8.0.0",
     "script-ext-html-webpack-plugin": "^2.1.4",
     "style-loader": "^1.0.0",
     "stylelint": "^11.1.1",
@@ -97,7 +96,6 @@
       "not Edge < 15"
     ]
   },
-  "prettier": {},
   "stylelint": {
     "plugins": [],
     "extends": [
@@ -105,6 +103,12 @@
       "stylelint-prettier/recommended",
       "stylelint-a11y/recommended"
     ],
-    "rules": {}
+    "rules": {
+      "prettier/prettier": [true, {"singleQuote": true}]
+
+    }
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }

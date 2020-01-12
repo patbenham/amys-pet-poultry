@@ -17,8 +17,8 @@ module.exports = env => {
       common.legacyConfig,
       {
         output: {
-          filename: '[name]-legacy.[hash].js',
-          chunkFilename: '[name]-legacy.js',
+          filename: '[name].legacy.[contenthash].js',
+          chunkFilename: '[name].legacy.[contenthash].js',
         },
         mode: 'production',
         devtool: 'eval-source-map',
@@ -52,6 +52,7 @@ module.exports = env => {
             }
           })
         ],
+        optimization: configureOptimization(LEGACY_CONFIG)
       }
     );
   }
@@ -60,8 +61,8 @@ module.exports = env => {
       common.modernConfig,
       {
         output: {
-          filename: '[name].[hash].js',
-          chunkFilename: '[name].js',
+          filename: '[name].[contenthash].js',
+          chunkFilename: '[name].[contenthash].js',
         },
         mode: 'production',
         devtool: 'eval-source-map',
@@ -73,7 +74,10 @@ module.exports = env => {
           ],
         },
         plugins: [
-          new FaviconsWebpackPlugin('./src/img/favicon.png'),
+          new FaviconsWebpackPlugin({
+            logo: './src/img/favicon.png',
+            inject: true
+          }),
           new BundleAnalyzerPlugin({
             analyzerMode: 'static',
             analyzerPort: 8887,
@@ -92,6 +96,7 @@ module.exports = env => {
             }
           })
         ],
+        optimization: configureOptimization(LEGACY_CONFIG)
       }
     );
   }
@@ -110,7 +115,7 @@ function configureCssLoader(buildType) {
       {
         loader: 'css-loader',
         options: {
-          importLoaders: 2,
+          importLoaders: 1,
           sourceMap: true
         },
       },
@@ -120,12 +125,12 @@ function configureCssLoader(buildType) {
           ident: 'postcss',
           sourceMap: true,
           plugins: [
-            require('postcss-preset-env')(),
+            // require('postcss-preset-env')(),
+            require('precss'),
             require('cssnano')(),
           ]
         }
       },
-      'sass-loader',
     ]
   };
 }
@@ -137,7 +142,7 @@ return {
     {
       loader: 'file-loader',
       options: {
-        name: '[name].[hash].[ext]'
+        name: '[name].[contenthash].[ext]'
       }
     },
     {
@@ -179,5 +184,21 @@ function configureHtmlLoader(buildType) {
         options: { minimize: true },
       },
     ]
+  };
+}
+
+function configureOptimization(buildType) {
+  return {
+    moduleIds: 'hashed',
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   };
 }
