@@ -7,40 +7,36 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 // Plugins
-const DashboardPlugin = require("webpack-dashboard/plugin");
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = env => {
   const mergeTarget = env.NODE_ENV;
-  const mergeTargetConfig = mergeTarget === 'legacy'
-    ? common.legacyConfig
-    : common.modernConfig;
+  const mergeTargetConfig =
+    mergeTarget === 'legacy' ? common.legacyConfig : common.modernConfig;
 
-  return merge(
-    mergeTargetConfig,
-    {
-      output: {
-        filename: '[name].js',
-        chunkFilename: '[name].CHUNK.js',
-      },
-      mode: 'development',
-      devtool: 'eval-source-map',
-      devServer: {
-        contentBase: './dist',
-      },
-      module: {
-        rules: [
-          configureCssLoader(mergeTarget),
-          configureImageLoader(mergeTarget),
-          configureHtmlLoader(mergeTarget),
-        ],
-      },
-      plugins: [
-        new DashboardPlugin(),
-      ],
-    }
-  )
-}
+  return merge(mergeTargetConfig, {
+    output: {
+      filename: '[name].js',
+      chunkFilename: '[name].CHUNK.js'
+    },
+    mode: 'development',
+    devtool: 'eval-source-map',
+    devServer: {
+      contentBase: './dist',
+      host: '0.0.0.0',
+      port: '8080'
+    },
+    module: {
+      rules: [
+        configureCssLoader(mergeTarget),
+        configureImageLoader(mergeTarget),
+        configureHtmlLoader(mergeTarget)
+      ]
+    },
+    plugins: [new DashboardPlugin()]
+  });
+};
 
 function configureImageLoader(buildType) {
   return {
@@ -51,7 +47,7 @@ function configureImageLoader(buildType) {
         options: {
           name: '[name].[ext]'
         }
-      },
+      }
     ]
   };
 }
@@ -63,7 +59,7 @@ function configureCssLoader(buildType) {
       {
         loader: MiniCssExtractPlugin.loader,
         options: {
-          hmr: true,
+          hmr: true
         }
       },
       {
@@ -72,7 +68,7 @@ function configureCssLoader(buildType) {
           import: false,
           importLoaders: 1,
           sourceMap: true
-        },
+        }
       },
       {
         loader: 'postcss-loader',
@@ -80,11 +76,11 @@ function configureCssLoader(buildType) {
           ident: 'postcss',
           sourceMap: true,
           plugins: [
-            require('precss'),
+            require('precss')
             // require('postcss-preset-env')(),
           ]
         }
-      },
+      }
     ]
   };
 }
@@ -93,12 +89,12 @@ function configureHtmlLoader(buildType) {
   return {
     test: /\.html$/,
     use: [
-      // 'file-loader?name=[name].[ext]', 
-      // 'extract-loader', 
+      // 'file-loader?name=[name].[ext]',
+      // 'extract-loader',
       {
         loader: 'html-loader',
-        options: { minimize: false },
-      },
+        options: { minimize: false }
+      }
     ]
   };
 }

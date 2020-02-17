@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dashboard -- webpack-dev-server --env.NODE_ENV=modern --config webpack.dev.js",
+    "start:prod": "webpack-dashboard -- webpack-dev-server --env.NODE_ENV=legacy --config webpack.prod.js",
     "dev": "webpack --env.NODE_ENV=modern --config webpack.dev.js",
     "build:legacy": "webpack --env.NODE_ENV=legacy --config webpack.prod.js --progress --colors",
     "build:modern": "webpack --env.NODE_ENV=modern --config webpack.prod.js --progress --colors"
@@ -104,8 +105,12 @@
       "stylelint-a11y/recommended"
     ],
     "rules": {
-      "prettier/prettier": [true, {"singleQuote": true}]
-
+      "prettier/prettier": [
+        true,
+        {
+          "singleQuote": true
+        }
+      ]
     }
   },
   "prettier": {
