@@ -154,6 +154,18 @@ main {
   width: 1px;
 }
 
+.translateZ {
+  transform: translateZ(0);
+}
+
+.opacity0 {
+  opacity: 0;
+}
+
+.opacity100 {
+  opacity: 100;
+}
+
 /* ================================= */
 /* ============ MODULES ============ */
 /* ================================= */

@@ -13,7 +13,7 @@ import GalleryPhoto from './gallery-photo.js';
  */
 function fetchGalleryPhotos(birdId) {
   const gallery = [];
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 7; i++) {
     const photo = new GalleryPhoto();
     gallery.push(photo);
 

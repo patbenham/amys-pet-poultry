@@ -3,10 +3,15 @@ import magBtn2 from './img/magnify2.svg';
 import state from './state.js';
 import createPopupModal from './popup-modal.js';
 import GalleryPhoto from './gallery-photo.js';
-import { loadGalleryPhoto, loadAndAttachPhoto } from './load-photos.js';
+import {
+  loadGalleryPhoto,
+  loadAndAttachPhoto,
+  attachNextGalleryPhoto
+} from './load-photos.js';
 import fetchGalleryPhotos from './fetch-photos.js';
 import galleryStore from './gallery-store.js';
 import linkModalPhotos from './modal-photos.js';
+import config from './config.js';
 
 // TODO: swipe & zoom animations are really slow on mobile, why?
 // TODO: work on making site more flexible -- e.g. changing orientation on phone
@@ -73,6 +78,7 @@ function createGalleries(popupModalSelectors) {
         leftSel.classList.add('popup-modal__photo--left');
         leftSel.classList.remove('visually-hidden');
         centerSel.classList.add('popup-modal__photo--center');
+        centerSel.classList.add('popup-modal__photo--transition');
         centerSel.classList.remove('visually-hidden');
         rightSel.classList.add('popup-modal__photo--right');
         rightSel.classList.remove('visually-hidden');
@@ -187,34 +193,42 @@ function createGalleries(popupModalSelectors) {
   function nextPhoto() {
     // updateModalCounter();
 
-    const leftPhotoObj = photos.getGalleryPhoto(-1);
-    // reset transform on image to the left
-    leftPhotoObj.img.style.transform = `translate(${leftPhotoObj.translateX}px, ${leftPhotoObj.translateY}px) scale(${leftPhotoObj.zoomLevel})`;
-
     // TODO: make a "loading" icon as placeholder for unloaded photos
     const leftModalPhoto = photos.getSelector(-1);
     const rightModalPhoto = photos.getSelector(1);
     const centerModalPhoto = photos.getSelector(0);
     const rRightModalPhoto = photos.getSelector(2);
     const galleryPhoto2 = photos.getGalleryPhoto(2);
-    loadAndAttachPhoto(rRightModalPhoto, galleryPhoto2, state.currentGallery);
 
+    loadGalleryPhoto(galleryPhoto2);
+    leftModalPhoto.classList.remove('popup-modal__photo--transition');
+    leftModalPhoto.classList.remove('popup-modal__photo--left');
+    leftModalPhoto.classList.add('visually-hidden');
     rRightModalPhoto.classList.add('popup-modal__photo--right');
-    photos.next();
+    rightModalPhoto.classList.add('popup-modal__photo--transition');
 
-    ((leftModalPhoto, centerModalPhoto, rightModalPhoto) => {
-      requestAnimationFrame(timestamp => {
-        centerModalPhoto.classList.add('popup-modal__photo--left');
-        centerModalPhoto.classList.remove('popup-modal__photo--center');
-        leftModalPhoto.classList.remove('popup-modal__photo--left');
-        leftModalPhoto.classList.remove('popup-modal__photo--transition');
-        leftModalPhoto.classList.add('visually-hidden');
-        rightModalPhoto.classList.add('popup-modal__photo--transition');
-        rightModalPhoto.classList.remove('popup-modal__photo--right');
-        rightModalPhoto.classList.add('popup-modal__photo--center');
-        rRightModalPhoto.classList.remove('visually-hidden');
-      });
-    })(leftModalPhoto, centerModalPhoto, rightModalPhoto);
+    photos.next();
+    let currentImg = photos.getGalleryPhoto(0).img;
+
+    requestAnimationFrame(timestamp => {
+      centerModalPhoto.classList.add('popup-modal__photo--left');
+      centerModalPhoto.classList.remove('popup-modal__photo--center');
+      rightModalPhoto.classList.remove('popup-modal__photo--right');
+      rightModalPhoto.classList.add('popup-modal__photo--center');
+      rRightModalPhoto.classList.remove('visually-hidden');
+
+      currentImg.classList.remove('translateZ');
+      // currentImg.classList.add('opacity0');
+
+      setTimeout(() => {
+        attachNextGalleryPhoto(photos).then(photo => {
+          currentImg.classList.add('translateZ');
+          // setTimeout(() => {
+          // currentImg.classList.remove('opacity0');
+          // }, 500);
+        });
+      }, config.slideDuration);
+    });
 
     // zoomPhoto(0)(); // reset magnify & minify buttons
   }

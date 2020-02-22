@@ -10,12 +10,13 @@ function GalleryPhoto() {
   this.translateX = 0;
   this.translateY = 0;
   this.ready = null;
+  this.srcIsSet = false;
 
   const galleryPhotoObj = this;
   this.img.onload = function imgOnload() {
     galleryPhotoObj.loaded = true;
-    galleryPhotoObj.origWidth = galleryPhotoObj.img.width;
-    galleryPhotoObj.origHeight = galleryPhotoObj.img.height;
+    // galleryPhotoObj.origWidth = galleryPhotoObj.img.width;
+    // galleryPhotoObj.origHeight = galleryPhotoObj.img.height;
   };
 }
 
@@ -23,11 +24,13 @@ function GalleryPhoto() {
  * Loads the new img src (set by setSource) into the DOM and decodes the image
  */
 GalleryPhoto.prototype.load = function load() {
-  if (this.img.src !== this.src) {
+  if (!this.srcIsSet) {
     this.loaded = false;
+    this.srcIsSet = true;
     this.img.src = this.src;
   }
-  return this.img.decode();
+  return Promise.resolve();
+  // return this.img.decode();
 };
 
 /*
@@ -38,6 +41,7 @@ GalleryPhoto.prototype.load = function load() {
  */
 GalleryPhoto.prototype.setSource = function setSource(src) {
   this.src = src;
+  this.srcIsSet = false;
 };
 
 /*
