@@ -13,13 +13,10 @@ import galleryStore from './gallery-store.js';
 import linkModalPhotos from './modal-photos.js';
 import config from './config.js';
 
-// TODO: swipe & zoom animations are really slow on mobile, why?
 // TODO: work on making site more flexible -- e.g. changing orientation on phone
 // messes up the gallery UI
 
 function createGalleries(popupModalSelectors) {
-  // TODO: pass these as function arguments rather than having them be
-  // global variables
   let {
     popupModal,
     modalPhotos,
@@ -65,7 +62,7 @@ function createGalleries(popupModalSelectors) {
         currentPhotoIndex = 0;
         state.currentGalleryNode = gallery;
 
-        modalPhotos.forEach(removeChildNodes);
+        modalPhotos.forEach(removePhotoNodes);
 
         state.currentGallery = fetchGalleryPhotos(birdId, store);
         photos.changeGallery(state.currentGallery);
@@ -108,10 +105,12 @@ function createGalleries(popupModalSelectors) {
     }
   });
 
-  function removeChildNodes(node) {
-    while (node.firstChild) {
-      node.removeChild(node.firstChild);
-    }
+  function removePhotoNodes(node) {
+    // while (node.firstChild) {
+    // node.removeChild(node.firstChild);
+    // }
+    const photo = node.querySelector('.popup-modal__photo');
+    if (photo) node.removeChild(photo);
   }
 
   modalCloseBtn.onclick = function closeGallery() {
@@ -193,7 +192,6 @@ function createGalleries(popupModalSelectors) {
   function nextPhoto() {
     // updateModalCounter();
 
-    // TODO: make a "loading" icon as placeholder for unloaded photos
     const leftModalPhoto = photos.getSelector(-1);
     const rightModalPhoto = photos.getSelector(1);
     const centerModalPhoto = photos.getSelector(0);

@@ -1,8 +1,5 @@
-function createPhotoNode() {
-  const node = document.createElement('div');
-  node.classList.add('popup-modal__photo-frame', 'flex');
-  return node;
-}
+import createLoadingIcon from './icons.js';
+import { createPhotoNode } from './photo-node.js';
 
 /**
  * @desc Links & tracks modalPhoto DOM selectors with GalleryPhotos

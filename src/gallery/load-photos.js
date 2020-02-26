@@ -9,11 +9,16 @@ function loadGalleryPhoto(galleryPhoto) {
   });
 }
 
+function attachGalleryPhoto(modalPhoto, galleryPhoto) {
+  modalPhoto.prepend(galleryPhoto.img);
+  modalPhoto.querySelector('.lds-ring').classList.add('visually-hidden');
+}
+
 function loadAndAttachPhoto(modalPhoto, galleryPhoto, currentGallery) {
   return loadGalleryPhoto(galleryPhoto).then(res => {
     if (!modalPhoto.contains(galleryPhoto.img)) {
       if (state.currentGallery === currentGallery)
-        modalPhoto.prepend(galleryPhoto.img);
+        attachGalleryPhoto(modalPhoto, galleryPhoto);
     }
     return Promise.resolve();
   });
@@ -37,10 +42,12 @@ function attachNextGalleryPhoto(linkedModalPhotos) {
     ) {
       if ('decode' in currentGalleryPhoto.img) {
         currentGalleryPhoto.img.decode().then(res => {
-          currentModalPhoto.prepend(currentGalleryPhoto.img);
+          // currentModalPhoto.prepend(currentGalleryPhoto.img);
+          attachGalleryPhoto(currentModalPhoto, currentGalleryPhoto);
         });
       } else {
-        currentModalPhoto.prepend(currentGalleryPhoto.img);
+        // currentModalPhoto.prepend(currentGalleryPhoto.img);
+        attachGalleryPhoto(currentModalPhoto, currentGalleryPhoto);
       }
       return Promise.resolve(currentGalleryPhoto.img);
     }
